@@ -1,5 +1,6 @@
 package com.example.pizdaa.controller;
 
+import com.example.pizdaa.dto.PostDTO;
 import com.example.pizdaa.model.PostModel;
 import com.example.pizdaa.service.PostService;
 
@@ -12,25 +13,25 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
 
-    PostService postService;
+   private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
     @GetMapping
-    public List<PostModel> getAllTodos() {
+    public List<PostDTO> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @GetMapping("{id}")
-    public PostModel getPostById(@PathVariable Integer id) {
+    public PostDTO getPostById(@PathVariable Integer id) {
         return postService.getPostById(id);
     }
 
     @PostMapping
-    public PostModel savePost(@RequestBody PostModel postModel) {
-        return postService.savePost(postModel);
+    public PostDTO savePost(@RequestBody PostDTO postDTO) {
+        return postService.savePost(postDTO);
     }
 
     @DeleteMapping("{id}")
@@ -39,7 +40,7 @@ public class PostController {
     }
 
     @PutMapping("{id}")
-    public PostModel updateTodo(@PathVariable Integer id, @RequestBody PostModel postModel) {
-        return postService.updatePost(id, postModel);
+    public PostDTO updateTodo(@PathVariable Integer id, @RequestBody PostDTO postDTO) {
+        return postService.updatePost(id, postDTO);
     }
 }
