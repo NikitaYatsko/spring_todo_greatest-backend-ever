@@ -4,6 +4,8 @@ public class PostDTO {
     private String title;
     private String content;
 
+
+
     public String getTitle() {
         return title;
     }

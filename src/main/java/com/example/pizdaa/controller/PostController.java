@@ -15,6 +15,7 @@ public class PostController {
 
     private final PostService postService;
 
+
     public PostController(PostService postService) {
         this.postService = postService;
     }
@@ -33,6 +34,12 @@ public class PostController {
     public ResponseEntity<PostDTO> savePost(@RequestBody PostDTO postDTO) {
         return ResponseEntity.ok(postService.savePost(postDTO));
     }
+    @PostMapping("/batch")
+    public ResponseEntity<List<PostDTO>> createPosts(@RequestBody List<PostDTO> posts) {
+        posts.forEach(postService::savePost);
+        return ResponseEntity.ok(posts);
+    }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
@@ -46,4 +53,6 @@ public class PostController {
         URI location = URI.create("/posts/" + id);
         return ResponseEntity.created(location).body(updatedPostDTO);
     }
+
+
 }

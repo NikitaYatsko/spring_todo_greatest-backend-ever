@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "posts", schema = "post_schema")
@@ -28,6 +29,8 @@ public class PostModel {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
 
 
     public PostModel() {
