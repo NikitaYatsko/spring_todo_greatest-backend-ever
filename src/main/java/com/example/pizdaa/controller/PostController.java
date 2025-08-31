@@ -1,11 +1,11 @@
 package com.example.pizdaa.controller;
 
 import com.example.pizdaa.dto.PostDTO;
-import com.example.pizdaa.model.PostModel;
 import com.example.pizdaa.service.PostService;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -13,34 +13,37 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
 
-   private final PostService postService;
+    private final PostService postService;
 
     public PostController(PostService postService) {
         this.postService = postService;
     }
 
     @GetMapping
-    public List<PostDTO> getAllPosts() {
-        return postService.getAllPosts();
+    public ResponseEntity<List<PostDTO>> getAllPosts() {
+        return ResponseEntity.ok(postService.getAllPosts());
     }
 
     @GetMapping("{id}")
-    public PostDTO getPostById(@PathVariable Integer id) {
-        return postService.getPostById(id);
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Integer id) {
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
     @PostMapping
-    public PostDTO savePost(@RequestBody PostDTO postDTO) {
-        return postService.savePost(postDTO);
+    public ResponseEntity<PostDTO> savePost(@RequestBody PostDTO postDTO) {
+        return ResponseEntity.ok(postService.savePost(postDTO));
     }
 
     @DeleteMapping("{id}")
-    public void deleteTodo(@PathVariable Integer id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Integer id) {
         postService.deletePost(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("{id}")
-    public PostDTO updateTodo(@PathVariable Integer id, @RequestBody PostDTO postDTO) {
-        return postService.updatePost(id, postDTO);
+    public ResponseEntity<PostDTO> updatePost(@PathVariable Integer id, @RequestBody PostDTO postDTO) {
+        PostDTO updatedPostDTO = postService.updatePost(id, postDTO);
+        URI location = URI.create("/posts/" + id);
+        return ResponseEntity.created(location).body(updatedPostDTO);
     }
 }

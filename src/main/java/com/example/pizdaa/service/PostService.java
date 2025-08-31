@@ -1,7 +1,7 @@
 package com.example.pizdaa.service;
 
 import com.example.pizdaa.dto.PostDTO;
-import com.example.pizdaa.model.PostModel;
+
 
 import java.util.List;
 
